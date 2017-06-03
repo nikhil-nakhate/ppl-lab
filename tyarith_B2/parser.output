@@ -1,0 +1,494 @@
+   0  $accept : %entry% $end
+
+   1  toplevel : EOF
+   2           | Command SEMI toplevel
+
+   3  Command : Term
+
+   4  Term : AppTerm
+   5       | IF Term THEN Term ELSE Term
+
+   6  AppTerm : ATerm
+   7          | SUCC ATerm
+   8          | PRED ATerm
+   9          | ISZERO ATerm
+  10          | ISWEEKDAY ATerm
+  11          | NEXTWEEKDAY ATerm
+
+  12  ATerm : LPAREN Term RPAREN
+  13        | TRUE
+  14        | FALSE
+  15        | INTV
+  16        | MONDAY
+  17        | TUESDAY
+  18        | WEDNESDAY
+  19        | THURSDAY
+  20        | FRIDAY
+  21        | SATURDAY
+  22        | SUNDAY
+
+  23  Type : AType
+
+  24  AType : LPAREN Type RPAREN
+  25        | BOOL
+  26        | NAT
+  27        | WEEKEND
+  28        | WEEKDAY
+
+  29  %entry% : '\001' toplevel
+
+state 0
+	$accept : . %entry% $end  (0)
+
+	'\001'  shift 1
+	.  error
+
+	%entry%  goto 2
+
+
+state 1
+	%entry% : '\001' . toplevel  (29)
+
+	IF  shift 3
+	TRUE  shift 4
+	FALSE  shift 5
+	SUCC  shift 6
+	PRED  shift 7
+	ISZERO  shift 8
+	ISWEEKDAY  shift 9
+	NEXTWEEKDAY  shift 10
+	MONDAY  shift 11
+	TUESDAY  shift 12
+	WEDNESDAY  shift 13
+	THURSDAY  shift 14
+	FRIDAY  shift 15
+	SATURDAY  shift 16
+	SUNDAY  shift 17
+	INTV  shift 18
+	EOF  shift 19
+	LPAREN  shift 20
+	.  error
+
+	toplevel  goto 21
+	Command  goto 22
+	Term  goto 23
+	AppTerm  goto 24
+	ATerm  goto 25
+
+
+state 2
+	$accept : %entry% . $end  (0)
+
+	$end  accept
+
+
+state 3
+	Term : IF . Term THEN Term ELSE Term  (5)
+
+	IF  shift 3
+	TRUE  shift 4
+	FALSE  shift 5
+	SUCC  shift 6
+	PRED  shift 7
+	ISZERO  shift 8
+	ISWEEKDAY  shift 9
+	NEXTWEEKDAY  shift 10
+	MONDAY  shift 11
+	TUESDAY  shift 12
+	WEDNESDAY  shift 13
+	THURSDAY  shift 14
+	FRIDAY  shift 15
+	SATURDAY  shift 16
+	SUNDAY  shift 17
+	INTV  shift 18
+	LPAREN  shift 20
+	.  error
+
+	Term  goto 26
+	AppTerm  goto 24
+	ATerm  goto 25
+
+
+state 4
+	ATerm : TRUE .  (13)
+
+	.  reduce 13
+
+
+state 5
+	ATerm : FALSE .  (14)
+
+	.  reduce 14
+
+
+state 6
+	AppTerm : SUCC . ATerm  (7)
+
+	TRUE  shift 4
+	FALSE  shift 5
+	MONDAY  shift 11
+	TUESDAY  shift 12
+	WEDNESDAY  shift 13
+	THURSDAY  shift 14
+	FRIDAY  shift 15
+	SATURDAY  shift 16
+	SUNDAY  shift 17
+	INTV  shift 18
+	LPAREN  shift 20
+	.  error
+
+	ATerm  goto 27
+
+
+state 7
+	AppTerm : PRED . ATerm  (8)
+
+	TRUE  shift 4
+	FALSE  shift 5
+	MONDAY  shift 11
+	TUESDAY  shift 12
+	WEDNESDAY  shift 13
+	THURSDAY  shift 14
+	FRIDAY  shift 15
+	SATURDAY  shift 16
+	SUNDAY  shift 17
+	INTV  shift 18
+	LPAREN  shift 20
+	.  error
+
+	ATerm  goto 28
+
+
+state 8
+	AppTerm : ISZERO . ATerm  (9)
+
+	TRUE  shift 4
+	FALSE  shift 5
+	MONDAY  shift 11
+	TUESDAY  shift 12
+	WEDNESDAY  shift 13
+	THURSDAY  shift 14
+	FRIDAY  shift 15
+	SATURDAY  shift 16
+	SUNDAY  shift 17
+	INTV  shift 18
+	LPAREN  shift 20
+	.  error
+
+	ATerm  goto 29
+
+
+state 9
+	AppTerm : ISWEEKDAY . ATerm  (10)
+
+	TRUE  shift 4
+	FALSE  shift 5
+	MONDAY  shift 11
+	TUESDAY  shift 12
+	WEDNESDAY  shift 13
+	THURSDAY  shift 14
+	FRIDAY  shift 15
+	SATURDAY  shift 16
+	SUNDAY  shift 17
+	INTV  shift 18
+	LPAREN  shift 20
+	.  error
+
+	ATerm  goto 30
+
+
+state 10
+	AppTerm : NEXTWEEKDAY . ATerm  (11)
+
+	TRUE  shift 4
+	FALSE  shift 5
+	MONDAY  shift 11
+	TUESDAY  shift 12
+	WEDNESDAY  shift 13
+	THURSDAY  shift 14
+	FRIDAY  shift 15
+	SATURDAY  shift 16
+	SUNDAY  shift 17
+	INTV  shift 18
+	LPAREN  shift 20
+	.  error
+
+	ATerm  goto 31
+
+
+state 11
+	ATerm : MONDAY .  (16)
+
+	.  reduce 16
+
+
+state 12
+	ATerm : TUESDAY .  (17)
+
+	.  reduce 17
+
+
+state 13
+	ATerm : WEDNESDAY .  (18)
+
+	.  reduce 18
+
+
+state 14
+	ATerm : THURSDAY .  (19)
+
+	.  reduce 19
+
+
+state 15
+	ATerm : FRIDAY .  (20)
+
+	.  reduce 20
+
+
+state 16
+	ATerm : SATURDAY .  (21)
+
+	.  reduce 21
+
+
+state 17
+	ATerm : SUNDAY .  (22)
+
+	.  reduce 22
+
+
+state 18
+	ATerm : INTV .  (15)
+
+	.  reduce 15
+
+
+state 19
+	toplevel : EOF .  (1)
+
+	.  reduce 1
+
+
+state 20
+	ATerm : LPAREN . Term RPAREN  (12)
+
+	IF  shift 3
+	TRUE  shift 4
+	FALSE  shift 5
+	SUCC  shift 6
+	PRED  shift 7
+	ISZERO  shift 8
+	ISWEEKDAY  shift 9
+	NEXTWEEKDAY  shift 10
+	MONDAY  shift 11
+	TUESDAY  shift 12
+	WEDNESDAY  shift 13
+	THURSDAY  shift 14
+	FRIDAY  shift 15
+	SATURDAY  shift 16
+	SUNDAY  shift 17
+	INTV  shift 18
+	LPAREN  shift 20
+	.  error
+
+	Term  goto 32
+	AppTerm  goto 24
+	ATerm  goto 25
+
+
+state 21
+	%entry% : '\001' toplevel .  (29)
+
+	.  reduce 29
+
+
+state 22
+	toplevel : Command . SEMI toplevel  (2)
+
+	SEMI  shift 33
+	.  error
+
+
+state 23
+	Command : Term .  (3)
+
+	.  reduce 3
+
+
+state 24
+	Term : AppTerm .  (4)
+
+	.  reduce 4
+
+
+state 25
+	AppTerm : ATerm .  (6)
+
+	.  reduce 6
+
+
+state 26
+	Term : IF Term . THEN Term ELSE Term  (5)
+
+	THEN  shift 34
+	.  error
+
+
+state 27
+	AppTerm : SUCC ATerm .  (7)
+
+	.  reduce 7
+
+
+state 28
+	AppTerm : PRED ATerm .  (8)
+
+	.  reduce 8
+
+
+state 29
+	AppTerm : ISZERO ATerm .  (9)
+
+	.  reduce 9
+
+
+state 30
+	AppTerm : ISWEEKDAY ATerm .  (10)
+
+	.  reduce 10
+
+
+state 31
+	AppTerm : NEXTWEEKDAY ATerm .  (11)
+
+	.  reduce 11
+
+
+state 32
+	ATerm : LPAREN Term . RPAREN  (12)
+
+	RPAREN  shift 35
+	.  error
+
+
+state 33
+	toplevel : Command SEMI . toplevel  (2)
+
+	IF  shift 3
+	TRUE  shift 4
+	FALSE  shift 5
+	SUCC  shift 6
+	PRED  shift 7
+	ISZERO  shift 8
+	ISWEEKDAY  shift 9
+	NEXTWEEKDAY  shift 10
+	MONDAY  shift 11
+	TUESDAY  shift 12
+	WEDNESDAY  shift 13
+	THURSDAY  shift 14
+	FRIDAY  shift 15
+	SATURDAY  shift 16
+	SUNDAY  shift 17
+	INTV  shift 18
+	EOF  shift 19
+	LPAREN  shift 20
+	.  error
+
+	toplevel  goto 36
+	Command  goto 22
+	Term  goto 23
+	AppTerm  goto 24
+	ATerm  goto 25
+
+
+state 34
+	Term : IF Term THEN . Term ELSE Term  (5)
+
+	IF  shift 3
+	TRUE  shift 4
+	FALSE  shift 5
+	SUCC  shift 6
+	PRED  shift 7
+	ISZERO  shift 8
+	ISWEEKDAY  shift 9
+	NEXTWEEKDAY  shift 10
+	MONDAY  shift 11
+	TUESDAY  shift 12
+	WEDNESDAY  shift 13
+	THURSDAY  shift 14
+	FRIDAY  shift 15
+	SATURDAY  shift 16
+	SUNDAY  shift 17
+	INTV  shift 18
+	LPAREN  shift 20
+	.  error
+
+	Term  goto 37
+	AppTerm  goto 24
+	ATerm  goto 25
+
+
+state 35
+	ATerm : LPAREN Term RPAREN .  (12)
+
+	.  reduce 12
+
+
+state 36
+	toplevel : Command SEMI toplevel .  (2)
+
+	.  reduce 2
+
+
+state 37
+	Term : IF Term THEN Term . ELSE Term  (5)
+
+	ELSE  shift 38
+	.  error
+
+
+state 38
+	Term : IF Term THEN Term ELSE . Term  (5)
+
+	IF  shift 3
+	TRUE  shift 4
+	FALSE  shift 5
+	SUCC  shift 6
+	PRED  shift 7
+	ISZERO  shift 8
+	ISWEEKDAY  shift 9
+	NEXTWEEKDAY  shift 10
+	MONDAY  shift 11
+	TUESDAY  shift 12
+	WEDNESDAY  shift 13
+	THURSDAY  shift 14
+	FRIDAY  shift 15
+	SATURDAY  shift 16
+	SUNDAY  shift 17
+	INTV  shift 18
+	LPAREN  shift 20
+	.  error
+
+	Term  goto 39
+	AppTerm  goto 24
+	ATerm  goto 25
+
+
+state 39
+	Term : IF Term THEN Term ELSE Term .  (5)
+
+	.  reduce 5
+
+
+Rules never reduced:
+	Type : AType  (23)
+	AType : LPAREN Type RPAREN  (24)
+	AType : BOOL  (25)
+	AType : NAT  (26)
+	AType : WEEKEND  (27)
+	AType : WEEKDAY  (28)
+
+
+66 terminals, 9 nonterminals
+30 grammar rules, 40 states
